@@ -1,0 +1,30 @@
+class Solution {
+    public int maximizeWin(int[] prizePositions, int k) {
+        // 线段长度是 k 的窗口
+        int n = prizePositions.length;
+        
+        // dp数组，dp[i] 表示在 i 之前可以获得的最多奖品数目
+        int[] dp = new int[n + 1];
+
+        int maxPrizes = 0; // 记录最终结果
+        int left = 0; // 滑动窗口左端点
+
+        for (int right = 0; right < n; right++) {
+            // 移动左端点，确保窗口长度为 k
+            while (prizePositions[right] - prizePositions[left] > k) {
+                left++;
+            }
+
+            // 当前窗口的奖品数量 = right - left + 1
+            int currentWindowPrizes = right - left + 1;
+            
+            // 更新dp：在位置 right 之前最多的奖品数
+            dp[right + 1] = Math.max(dp[right], currentWindowPrizes);
+
+            // 计算选取两个不重叠窗口时的最大奖品数目
+            maxPrizes = Math.max(maxPrizes, currentWindowPrizes + dp[left]);
+        }
+
+        return maxPrizes;
+    }
+}
