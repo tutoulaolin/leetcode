@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int maxNumOfMarkedIndices(vector<int>& nums) {
+        int len=nums.size();
+        int left=0;
+        int right=len/2;
+        
+        vector<int> posi(len,0);
+        sort(nums.begin(),nums.end());//从小到大
+
+
+        while(left<len/2&&right<len){
+        
+                if(2*nums[left]<=nums[right])
+                {
+                    posi[left]=1;
+                    posi[right]=1;
+                    left++;
+                    right++;
+                }else
+                right++;
+            
+        }
+
+        int sum=0;
+        for(int k=0;k<len;k++)
+        if(posi[k]==1)
+        sum++;
+
+        return sum;
+    }
+};
