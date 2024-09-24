@@ -1,6 +1,7 @@
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
+//快慢指针
         int fast=0;
         int slow=0;
         int sum=0;
