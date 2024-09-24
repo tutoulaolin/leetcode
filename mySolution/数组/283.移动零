@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int fast=0;
+        int slow=0;
+        int sum=0;
+        for(;fast<nums.size();fast++){
+            if(nums[fast]!=0)
+            {
+                nums[slow]=nums[fast];
+                slow++;
+                
+            }
+            else
+            sum++;
+            
+
+        }
+        for(fast=nums.size()-sum;fast<nums.size();fast++)
+            nums[fast]=0;
+
+           
+
+    }
+};
