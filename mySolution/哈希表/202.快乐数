@@ -1,0 +1,27 @@
+class Solution {
+    public boolean isHappy(int n) {
+        Set<Integer> sumSet=new HashSet<>();
+        int sum=0;
+        int m;
+        
+
+
+        while(n!=1)
+        {
+            sumSet.add(n);   
+            sum=0;
+            while(n>0){
+                m=n%10;
+                sum=sum+m*m;
+                n=n/10;
+            }
+            n=sum;
+
+            if(sumSet.contains(n))
+            return false;
+
+        }
+        return true;
+
+    }
+}
