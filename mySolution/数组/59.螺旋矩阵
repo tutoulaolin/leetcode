@@ -1,0 +1,48 @@
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int startX=0,startY=0;
+        int[][] nums=new int[n][n];
+        int offset=1;
+        int cnt=1;
+        int loop=0;
+        int i,j;
+
+        while(loop<=n/2)
+        {
+            //最上层
+            for(j=startY;j<n-offset;j++)
+            {
+                nums[startX][j]=cnt;
+                cnt++;
+            }
+            //右边
+            for(i=startX;i<n-offset;i++)
+            {
+                nums[i][j]=cnt;
+                cnt++;
+            }
+            //底层
+            for(;j>startY;j--)
+            {
+                nums[i][j]=cnt;
+                cnt++;
+            }
+            //左边
+            for(;i>startX;i--)
+            {
+                nums[i][j]=cnt;
+                cnt++;
+            }
+
+            loop++;
+            startX++;
+            startY++;
+            offset++;
+        }
+        if(n%2==1)
+        nums[n/2][n/2]=n*n;
+
+        return nums;
+
+    }
+}
