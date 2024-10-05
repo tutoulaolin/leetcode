@@ -1,0 +1,77 @@
+//Edition1：直接调用库函数split
+class Solution {
+    public String reverseWords(String s) {
+        String[] words=s.trim().split("\s+");
+        int len=words.length;
+        StringBuffer sbf=new StringBuffer();
+        for(int i=len-1;i>0;i--)
+        {
+            sbf.append(words[i]);
+            sbf.append(' ');
+        }
+        sbf.append(words[0]);
+
+        return sbf.toString();
+    }
+}
+
+//Editions2：去除空格后反转字符串再反转单词，定义了三个方法
+class Solution {
+
+    public StringBuilder removeSpace(String s)
+    {
+        int start=0;
+        int end=s.length()-1;
+        while(s.charAt(start)==' ') start++;
+        while(s.charAt(end)==' ') end--;
+        StringBuilder sb=new StringBuilder();
+        while(start<=end){
+
+            char c=s.charAt(start);
+            if(c!=' '||sb.charAt(sb.length()-1)!=' ')
+            sb.append(c);
+
+            start++;
+        }
+        return sb;
+    }
+
+    public void reverseString(StringBuilder sb,int start,int end){
+        char temp;
+        while(start<end){
+            temp=sb.charAt(start);
+            sb.setCharAt(start,sb.charAt(end));
+            sb.setCharAt(end,temp);
+
+            start++;
+            end--;
+        }
+
+    }
+
+    public void reverseEachWord(StringBuilder sb){
+        int start=0;
+        int end=1;
+        int cnt=sb.length();
+        while(end<cnt){
+            while(end<cnt&&sb.charAt(end)!=' ')
+            end++;
+
+            reverseString(sb,start,end-1);
+            start=end+1;
+            end=start+1;
+
+        }
+    }
+
+    public String reverseWords(String s) {
+        StringBuilder sb=removeSpace(s);
+
+        reverseString(sb,0,sb.length()-1);
+        reverseEachWord(sb);
+
+        return sb.toString();
+
+      
+    }
+}
