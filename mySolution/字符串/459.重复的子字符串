@@ -1,0 +1,31 @@
+class Solution {
+
+    public void getNext(String s,int[] next){
+        int len=s.length();
+        int j=-1;
+        next[0]=j;
+        for(int i=1;i<len;i++){
+            while(j>=0&&s.charAt(i)!=s.charAt(j+1))
+            j=next[j];
+            if(s.charAt(i)==s.charAt(j+1))
+            j++;
+
+            next[i]=j;
+        }
+    }
+    public boolean repeatedSubstringPattern(String s) {
+        if(s.length()==0)
+        return false;
+        int len=s.length();
+
+        int[] next=new int[len];
+
+        getNext(s,next);
+
+        if(next[len-1]!=-1&&len%(len-next[len-1]-1)==0)
+        return true;
+
+        return false;
+
+    }
+}
