@@ -1,0 +1,93 @@
+//比较出队元素和上一个窗口的最大值和入队元素 美美超时。
+class Solution {
+    // 计算当前队列的最大值
+    public int MaxNum(Deque<Integer> deque){
+        int max_num = deque.getFirst();
+        for (int num : deque) {
+            if (num > max_num) {
+                max_num = num;
+            }
+        }
+        return max_num;
+    }
+    
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        Deque<Integer> deque = new ArrayDeque<>();
+        int[] max_nums = new int[nums.length - k + 1];
+        int max_val = Integer.MIN_VALUE;  // 保存上一个窗口的最大值
+        int cnt = 0;
+
+        // 初始化窗口
+        for (int i = 0; i < k; i++) {
+            deque.addLast(nums[i]);
+            if (nums[i] > max_val) {
+                max_val = nums[i];
+            }
+        }
+        max_nums[cnt++] = max_val;
+
+        for(int i=k;i<nums.length;i++){
+            
+            if(deque.getFirst()==max_val){
+                deque.removeFirst();
+                deque.addLast(nums[i]);
+                max_val=MaxNum(deque);
+            }else{
+                deque.removeFirst();
+                deque.addLast(nums[i]);
+                max_val=max_val>nums[i]?max_val:nums[i];
+            }
+            max_nums[cnt++] = max_val;
+        }
+
+        return max_nums;
+    }
+}
+//////gpt版本////////
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+class Solution {
+    // 计算当前队列的最大值
+    public int MaxNum(Deque<Integer> deque){
+        int max_num = deque.getFirst();
+        for (int num : deque) {
+            if (num > max_num) {
+                max_num = num;
+            }
+        }
+        return max_num;
+    }
+    
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        Deque<Integer> deque = new ArrayDeque<>();
+        int[] max_nums = new int[nums.length - k + 1];
+        int max_val = Integer.MIN_VALUE;  // 保存上一个窗口的最大值
+        int cnt = 0;
+
+        // 初始化窗口
+        for (int i = 0; i < k; i++) {
+            deque.addLast(nums[i]);
+            if (nums[i] > max_val) {
+                max_val = nums[i];
+            }
+        }
+        max_nums[cnt++] = max_val;
+
+        // 处理剩余元素
+        for (int i = k; i < nums.length; i++) {
+            int out = deque.removeFirst();  // 移除窗口最左边的元素
+            deque.addLast(nums[i]);  // 添加新的元素
+
+            if (out == max_val) {  // 如果移除的元素是当前窗口的最大值
+                max_val = MaxNum(deque);  // 重新计算最大值
+            } else {
+                max_val = Math.max(max_val, nums[i]);  // 比较新的元素和当前最大值
+            }
+
+            max_nums[cnt++] = max_val;  // 记录当前窗口的最大值
+        }
+
+        return max_nums;
+    }
+}
