@@ -91,3 +91,54 @@ class Solution {
         return max_nums;
     }
 }
+
+
+//ac答 单调队列
+class MyQueue{
+    private Deque<Integer> deque = new LinkedList<>();
+    public void pop(int value){
+        if(!deque.isEmpty()&&value==deque.peek())
+        deque.poll();
+    }
+
+    public void add(int value){
+        while(!deque.isEmpty()&&value>deque.getLast()){
+            deque.removeLast();
+        }
+
+        if(deque.isEmpty()||deque.getLast()>=value)
+        deque.addLast(value);
+    }
+
+    public int peek(){
+        return deque.peek();
+    }
+
+}
+class Solution {
+
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        MyQueue myq=new MyQueue();
+        int len=nums.length;
+        if(len==1)
+        return nums;
+        int[] ans=new int[len-k+1];
+        for(int i=0;i<k;i++){
+            myq.add(nums[i]);
+        }
+        ans[0]=myq.peek();
+        int cnt=1;
+        for(int j=k;j<len;j++){
+            myq.pop(nums[j-k]);
+            myq.add(nums[j]);
+
+            ans[cnt++]=myq.peek();
+        }
+
+        return ans;
+        
+        
+}
+}
+
+
