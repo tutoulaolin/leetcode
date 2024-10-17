@@ -27,7 +27,7 @@ class Solution {
         if(root==null) return res;
         que.offer(cur);
 
-        while(!que.isEmpty()||cur!=null){
+        while(!que.isEmpty()){
             int len=que.size();
             List<Integer> list=new ArrayList<Integer>();
             while(len>0){
