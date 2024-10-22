@@ -1,0 +1,23 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        
+        int len=nums.length;
+        if(len==0)
+        return 0;
+        int[] dp=new int[len];
+        dp[0]=nums[0];
+        int res=dp[0];
+
+        for(int i=1;i<len;i++){
+            //dp[i]表示以num[i]结尾的最大连续子数组和
+            //用前一个最大子数组和加上当前下标的值与当前下标的值比较，取较大者
+            dp[i]=Math.max(dp[i-1]+nums[i],nums[i]);
+            //更新res值
+            if(dp[i]>res)
+            res=dp[i];
+
+        }
+        return res;
+        
+    }
+}
