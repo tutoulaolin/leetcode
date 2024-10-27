@@ -1,0 +1,58 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+
+    public void traversal(TreeNode root,int start,int end,int[] nums){
+        if(start>=end)
+        return;
+        int max=nums[start];
+        int max_index=start;
+        for(int i=start;i<end;i++)
+        {
+            if(nums[i]>=max){
+                max=nums[i];
+                max_index=i;
+                
+            }
+
+
+        }
+        root.val=max;
+        TreeNode root_left=new TreeNode();
+        TreeNode root_right=new TreeNode();
+        if(max_index<end-1)
+        {
+            root.right=root_right;
+            traversal(root.right,max_index+1,end,nums);
+        }
+        if(max_index>start){
+            root.left=root_left;
+            traversal(root.left,start,max_index,nums);
+        }
+    }
+    public TreeNode constructMaximumBinaryTree(int[] nums) {
+
+        int len=nums.length;
+        if(len==0)
+        return null;
+
+        TreeNode root=new TreeNode();
+
+        traversal(root,0,len,nums);
+        return root;
+        
+    }
+}
