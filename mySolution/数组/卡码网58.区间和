@@ -1,0 +1,27 @@
+import java.util.*;
+
+public class Main{
+    public static void main (String[] args) {
+    Scanner scanner=new Scanner(System.in);
+    
+    int n=scanner.nextInt();
+    
+    int[] nums=new int[n];
+    for(int i=0;i<n;i++){
+        nums[i]=scanner.nextInt();
+    }
+    int[] sums=new int[n];
+    sums[0]=nums[0];
+    for(int i=1;i<n;i++){
+        sums[i]=nums[i]+sums[i-1];
+    }
+    while(scanner.hasNextInt()){
+        int a=scanner.nextInt();
+        int b=scanner.nextInt();
+        if(a!=0)
+        System.out.println(sums[b]-sums[a-1]);
+        else
+        System.out.println(sums[b]);
+    }
+}
+}
