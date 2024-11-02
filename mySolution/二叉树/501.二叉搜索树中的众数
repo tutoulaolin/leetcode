@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    Map<Integer,Integer> map;
+    public void traversal(TreeNode root,Map<Integer,Integer> map){
+
+        if(root==null)
+        return;
+        traversal(root.left,map);
+        map.put(root.val,map.getOrDefault(root.val,0)+1);
+        traversal(root.right,map);
+
+    }
+    public int[] findMode(TreeNode root) {
+
+        if(root==null)
+        return null;
+
+        map=new HashMap<Integer,Integer>();
+        traversal(root,map);
+
+         PriorityQueue<int[]> pq=new PriorityQueue<>((arr1,arr2)->(arr2[1]-arr1[1]));
+
+        for(Map.Entry<Integer,Integer> entry:map.entrySet()){
+            pq.add(new int[]{entry.getKey(),entry.getValue()});
+        }
+
+        int ans=pq.peek()[1];//最多的次数
+        List<Integer> res=new ArrayList<>();
+        
+        while(pq.peek()[1]==ans){
+            res.add(pq.poll()[0]);
+        }       
+
+        int len=res.size();
+        int[] nums=new int[len];
+        for(int i=0;i<len;i++)
+        nums[i]=res.get(i);
+
+        return nums; 
+
+
+
+        
+    }
+}
