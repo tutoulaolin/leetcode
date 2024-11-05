@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        //0.根节点为空
+        if(root==null)
+        return root;
+        
+        if(root.val==key){
+            //1.叶子节点为目标节点
+            if(root.left==null&&root.right==null)
+            return null;
+            //2.左空右不空
+            if(root.left==null&&root.right!=null)
+            return root.right;
+            //3.左不空右空
+            if(root.left!=null&&root.right==null)
+            return root.left;
+            //4.都不为空
+            else{
+                TreeNode cur=root.right;
+                while(cur.left!=null)
+                cur=cur.left;
+
+                cur.left=root.left;
+                root=root.right;
+
+                return root;
+            }
+                
+            
+        }
+
+        if(root.val>key) root.left=deleteNode(root.left,key);
+        if(root.val<key) root.right=deleteNode(root.right,key);
+
+        return root;
+        
+    }
+}
