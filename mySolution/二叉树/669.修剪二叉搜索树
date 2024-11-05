@@ -1,0 +1,61 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    
+    public TreeNode trimBST(TreeNode root, int low, int high) {
+       //0.根节点为空
+        if(root==null)
+        return root;
+        
+        if(root.val<low){
+            //1.叶子节点为目标节点
+            if(root.left==null&&root.right==null)
+            return null;
+            //2.左空右不空
+            if(root.left==null&&root.right!=null)
+            return trimBST(root.right,low,high);
+            //3.左不空右空
+            if(root.left!=null&&root.right==null)
+            return null;
+            //4.都不为空
+            else{
+                root.left=null;
+                root=root.right;
+                return trimBST(root,low,high);
+            }
+        }else if(root.val>high){
+            //1.叶子节点为目标节点
+            if(root.left==null&&root.right==null)
+            return null;
+            //2.左空右不空
+            if(root.left==null&&root.right!=null)
+            return null;
+            //3.左不空右空
+            if(root.left!=null&&root.right==null)
+            return trimBST(root.left,low,high);
+            //4.都不为空
+            else{
+                root.right=null;
+                root=root.left;
+                return trimBST(root,low,high);
+            }
+        }
+
+        root.left=trimBST(root.left,low,high);
+        root.right=trimBST(root.right,low,high);
+        return root; 
+    }
+}
