@@ -57,3 +57,76 @@ class Solution {
         
     }
 }
+//利用二叉搜索树特性
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    List<Integer> res;
+    int maxcount;
+    TreeNode pre;
+    int count;
+
+    public void traversal(TreeNode root,List<Integer> res){
+
+        if(root==null)
+        return;
+        traversal(root.left,res);
+
+        int curval=root.val;
+        if(pre==null||pre.val!=curval){
+            count=1;     
+        }else 
+            count++;
+        pre=root;
+
+        if(count==maxcount){
+            res.add(curval);
+        }else if(count>maxcount)
+        {
+            res.clear();
+            res.add(curval);
+            maxcount=count;
+        }
+
+        traversal(root.right,res);
+
+    }
+    public int[] findMode(TreeNode root) {
+        maxcount=0;
+        count=0;
+        
+
+        if(root==null)
+        return null;
+
+        res=new ArrayList<Integer>();
+       
+        traversal(root,res);
+
+         int len=res.size();
+         int[] nums=new int[len];
+         for(int i=0;i<len;i++)
+         nums[i]=res.get(i);
+
+
+         return nums;
+         
+
+
+
+        
+    }
+}
