@@ -1,0 +1,24 @@
+class Solution {
+    List<List<Integer>> res=new ArrayList<>();//数组
+    List<Integer> path=new LinkedList<>();//双向链表，头尾可插入
+
+    public void backtracking(int n,int k,int start){
+        if(path.size()==k){
+            //生成path副本，避免后续修改影响res
+            res.add(new LinkedList<>(path));
+            return;
+        }
+        //剪枝操作，+1防止最后一个数取不到（从1开始的）
+        for(int i=start;i<=n-(k-path.size())+1;i++){
+            path.add(i);
+            backtracking(n,k,i+1);
+            path.removeLast();
+        }
+    }
+    public List<List<Integer>> combine(int n, int k) {
+
+        backtracking(n,k,1);
+        return res;
+        
+    }
+}
