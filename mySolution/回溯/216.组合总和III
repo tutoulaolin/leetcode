@@ -1,19 +1,20 @@
+//不增加额外内存消耗，直接在目标值（n）上减去遍历到的值，与0比较
 class Solution {
     List<List<Integer>> res=new ArrayList<>();
     List<Integer> path=new LinkedList<>();
 
-    public void backtracking(int k,int n,int sum,int start){
-        if(sum==n&&path.size()==k)
+    public void backtracking(int k,int n,int start){
+        if(n==0&&path.size()==k)
         {
             res.add(new LinkedList<>(path));
             return;
         }
-        else if(sum>n)
+        else if(n<0)
         return;
 
         for(int i=start;i<=9;i++){
             path.add(i);
-            backtracking(k,n,sum+i,i+1);
+            backtracking(k,n-i,i+1);
             path.removeLast();
         }
     }
@@ -21,7 +22,7 @@ class Solution {
         if(n==0||k==0)
         return res;
 
-        backtracking(k,n,0,1);
+        backtracking(k,n,1);
 
         return res;
         
