@@ -14,6 +14,11 @@ class Solution {
 
         for(int i=start;i<=9;i++){
             path.add(i);
+//剪枝操作
+            if(n-i<0){
+                path.removeLast();
+                return;
+            }
             backtracking(k,n-i,i+1);
             path.removeLast();
         }
