@@ -1,0 +1,30 @@
+class Solution {
+
+    List<String> list=new ArrayList<>();
+    StringBuilder str=new StringBuilder();
+    String[] numString={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    public void backtracking(String digits,int nums,String[] numString){
+        if(nums==digits.length()){
+            list.add(str.toString());
+            return;
+        }
+        //将字符串的数字转化为int
+        int n=digits.charAt(nums)-'0';
+
+        for(int i=0;i<numString[n].length();i++){
+            str.append(numString[n].charAt(i));
+            backtracking(digits,nums+1,numString);
+            str.deleteCharAt(nums);
+        }
+    }
+    public List<String> letterCombinations(String digits) {
+        if(digits==null||digits.length()==0)
+        return list;
+
+        backtracking(digits,0,numString);
+
+        return list;
+
+        
+    }
+}
