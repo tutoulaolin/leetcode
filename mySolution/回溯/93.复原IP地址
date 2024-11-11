@@ -1,0 +1,63 @@
+class Solution {
+    List<String> res=new ArrayList<>();
+    StringBuilder sb=new StringBuilder();
+    
+
+    public void backtracking(String s,int start,int point){
+        if(point==3)
+        {
+            if(isValid(s,start,s.length()-1)){
+                sb.append(s.substring(start));
+                res.add(new String(sb.toString()));
+                sb.delete(sb.length()-(s.length()-start),sb.length());
+            }
+            
+            return;
+        }
+
+        for(int i=start;i<s.length();i++){
+            
+            if(isValid(s,start,i)){
+                int len=sb.length();
+                sb.append(s.substring(start,i+1));
+                sb.append(".");
+                
+                backtracking(s,i+1,point+1);
+                sb.delete(len,sb.length());
+            }else break;
+                
+                
+            
+
+        }
+    }
+
+    public boolean isValid(String s,int start,int end){
+        if(end-start>0&&s.charAt(start)=='0')
+        return false;
+        if(end-start>=3||end-start<0)
+        return false;
+
+        int num=0;
+        while(end>=start)
+        {
+            num=num*10+(s.charAt(start)-'0');
+           
+            start++;
+        }
+        if(num<=255&&num>=0)
+        return true;
+        else
+        return false;
+        
+    } 
+    public List<String> restoreIpAddresses(String s) {
+        if(s==null||s.length()<4||s.length()>12)
+        return res;
+
+        backtracking(s,0,0);
+
+        return res;
+        
+    }
+}
