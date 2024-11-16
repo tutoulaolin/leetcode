@@ -1,0 +1,56 @@
+class Solution {
+    List<List<String>> res=new ArrayList<>();
+    public void backtracking(int row,char[][] gameboard,int n){
+        if(row==n){
+            res.add(toArrayList(gameboard));
+            return;
+        }
+
+        for(int i=0;i<n;i++){
+            if(isValid(gameboard,i,row)){
+                gameboard[row][i]='Q';
+                backtracking(row+1,gameboard,n);
+                gameboard[row][i]='.';
+            }
+        }
+    }
+
+    public boolean isValid(char[][] gameboard,int col,int row){
+        for(int i=0;i<row;i++){
+            if(gameboard[i][col]=='Q')
+            return false;
+        }
+        for(int i=1;i<=row;i++){
+            if(col-i>=0&&gameboard[row-i][col-i]=='Q')
+            return false;
+        }
+        for(int i=1;i<=row;i++){
+            if(col+i<gameboard[0].length&&gameboard[row-i][col+i]=='Q')
+            return false;
+        }
+
+        return true;
+    }
+    public List<String> toArrayList(char[][] gameboard){
+        List<String> path=new ArrayList<>();
+
+        for(int i=0;i<gameboard[0].length;i++){
+            path.add(String.valueOf(gameboard[i]));
+        }
+        return path;
+    }
+    public List<List<String>> solveNQueens(int n) {
+
+        char[][] gameboard=new char[n][n];
+        for(char[] c:gameboard)
+            Arrays.fill(c,'.');
+        
+        backtracking(0,gameboard,n);
+
+        
+
+            return res;
+        
+    }
+
+}
