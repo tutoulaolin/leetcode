@@ -1,0 +1,120 @@
+//优化版本
+class Solution {
+private:
+// unordered_map<出发机场, map<到达机场, 航班次数>> targets
+unordered_map<string, map<string, int>> targets;
+bool backtracking(int ticketNum, vector<string>& result) {
+    if (result.size() == ticketNum + 1) {
+        return true;
+    }
+    for (pair<const string, int>& target : targets[result[result.size() - 1]]) {
+        if (target.second > 0 ) { // 记录到达机场是否飞过了
+            result.push_back(target.first);
+            target.second--;
+            if (backtracking(ticketNum, result)) return true;
+            result.pop_back();
+            target.second++;
+        }
+    }
+    return false;
+}
+public:
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        targets.clear();
+        vector<string> result;
+        for (const vector<string>& vec : tickets) {
+            targets[vec[0]][vec[1]]++; // 记录映射关系
+        }
+        result.push_back("JFK"); // 起始机场
+        backtracking(tickets.size(), result);
+        return result;
+    }
+};
+
+class Solution {
+    private Deque<String> res;
+    private Map<String, Map<String, Integer>> map;
+
+    private boolean backTracking(int ticketNum){
+        if(res.size() == ticketNum + 1){
+            return true;
+        }
+        String last = res.getLast();
+        if(map.containsKey(last)){//防止出现null
+            for(Map.Entry<String, Integer> target : map.get(last).entrySet()){
+                int count = target.getValue();
+                if(count > 0){
+                    res.add(target.getKey());
+                    target.setValue(count - 1);
+                    if(backTracking(ticketNum)) return true;
+                    res.removeLast();
+                    target.setValue(count);
+                }
+            }
+        }
+        return false;
+    }
+
+    public List<String> findItinerary(List<List<String>> tickets) {
+        map = new HashMap<String, Map<String, Integer>>();
+        res = new LinkedList<>();
+        for(List<String> t : tickets){
+            Map<String, Integer> temp;
+            if(map.containsKey(t.get(0))){
+                temp = map.get(t.get(0));
+                temp.put(t.get(1), temp.getOrDefault(t.get(1), 0) + 1);
+            }else{
+                temp = new TreeMap<>();//升序Map
+                temp.put(t.get(1), 1);
+            }
+            map.put(t.get(0), temp);
+
+        }
+        res.add("JFK");
+        backTracking(tickets.size());
+        return new ArrayList<>(res);
+    }
+}
+
+//超时版本（用int记录同一个地点的次数可以避免超时）
+class Solution {
+    private LinkedList<String> res;
+    private LinkedList<String> path=new LinkedList<>();
+    public List<String> findItinerary(List<List<String>> tickets) {
+        //字典序
+        Collections.sort(tickets,(a,b)->a.get(1).compareTo(b.get(1)));
+
+        boolean[] used=new boolean[tickets.size()];
+        
+        path.add("JFK");
+        backtracking(tickets,used);
+        return res;
+
+    }
+
+    public boolean backtracking(List<List<String>> tickets,boolean[] used){
+        if(path.size()==tickets.size()+1){
+            res=new LinkedList(path);
+            return true;
+        }
+
+        for(int i=0;i<tickets.size();i++){
+            if(!used[i]&&tickets.get(i).get(0).equals(path.getLast()))
+            {
+                path.add(tickets.get(i).get(1));
+                used[i]=true;
+
+                if(backtracking(tickets,used))
+                return true;
+
+                path.remove(path.size()-1);
+                used[i]=false;
+            }
+
+
+
+        }
+
+        return false;
+    }
+}
