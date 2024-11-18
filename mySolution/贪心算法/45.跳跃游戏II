@@ -1,0 +1,23 @@
+class Solution {
+    public int jump(int[] nums) {
+        if(nums.length==1)
+        return 0;
+        
+        int cnt=0;
+        int maxrange=0;//temp
+        int cur=0;//end
+        //题目假设总是可以到达数组的最后一个位置,所以是<length-1
+        for(int i=0;i<=cur&&cur<nums.length-1;i++){
+            
+            maxrange=Math.max(maxrange,i+nums[i]);
+            
+            if(i==cur){
+                cnt++;
+                cur=maxrange;
+            }
+        }
+            return cnt;
+        
+        
+    }
+}
