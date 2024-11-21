@@ -1,0 +1,28 @@
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        List<Integer> ans=new ArrayList<>();
+        int[] alphabet=new int[26];
+        
+        
+
+        for(int i=0;i<s.length();i++){
+            
+            alphabet[s.charAt(i)-'a']=i;
+        }
+        int max=0;
+        int last=-1;
+        for(int i=0;i<s.length();i++){
+            max=Math.max(max,alphabet[s.charAt(i)-'a']);
+            if(i==max)
+            {   //长度
+                ans.add(i-last);
+                last=i;
+            }
+        }
+
+
+
+        return ans;
+        
+    }
+}
