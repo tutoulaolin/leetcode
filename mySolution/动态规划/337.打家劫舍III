@@ -1,0 +1,45 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int[] dp(TreeNode root){
+        int []ans=new int[2];
+        if(root==null)
+        return ans;
+        
+        int val1[]=new int[2];
+        int val2[]=new int[2];
+        
+        val1=dp(root.left);
+        
+        val2=dp(root.right);
+
+        ans[0]=Math.max(val1[0],val1[1])+Math.max(val2[0],val2[1]);
+        ans[1]=root.val+val1[0]+val2[0];
+
+        return ans;
+
+
+    }
+    public int rob(TreeNode root) {
+
+        int[] res;
+        //res[0]:不偷当前节点 res[1]:偷
+        res=dp(root);
+
+        return Math.max(res[0],res[1]);
+        
+    }
+}
