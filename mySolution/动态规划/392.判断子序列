@@ -1,0 +1,31 @@
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        /* 暴力方法
+        int cnt=0;
+        for(int i=0;i<t.length()&&cnt<s.length();i++){
+            if(t.charAt(i)==s.charAt(cnt))
+            cnt++;
+        }
+
+        return cnt==s.length();
+        */
+
+        /*dp*/
+        int[][] dp=new int[t.length()+1][s.length()+1];
+        int ans=0;
+
+        for(int i=1;i<=t.length();i++){
+            for(int j=1;j<=s.length();j++){
+                if(t.charAt(i-1)==s.charAt(j-1))
+                dp[i][j]=dp[i-1][j-1]+1;
+                else
+                dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+
+                if(dp[i][j]>ans)
+                ans=dp[i][j];
+            }
+        }
+
+        return ans==s.length();
+    }
+}
