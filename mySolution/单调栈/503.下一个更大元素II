@@ -1,0 +1,23 @@
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        int len=nums.length;
+        int[] ans=new int[len];
+        Arrays.fill(ans,-1);
+
+        Deque<Integer> stack=new LinkedList<>();
+
+        for(int i=0;i<2*len;i++){
+            if(!stack.isEmpty()){
+                while(!stack.isEmpty()&&nums[i%len]>nums[stack.peek()]){
+                    ans[stack.peek()]=nums[i%len];
+                    stack.pop();
+                }
+            }
+
+            stack.push(i%len);
+        }
+
+        return ans;
+        
+    }
+}
