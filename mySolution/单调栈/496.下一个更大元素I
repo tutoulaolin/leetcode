@@ -1,0 +1,31 @@
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        HashMap<Integer,Integer> map=new HashMap<>();
+        for(int j=0;j<nums1.length;j++){
+            map.put(nums1[j],j);
+        }
+        
+        int[] ans1=new int[nums1.length];
+        Arrays.fill(ans1,-1);
+        Deque<Integer> stack=new LinkedList<>();
+        for(int i=0;i<nums2.length;i++){
+            if(!stack.isEmpty())
+           {
+                while(!stack.isEmpty()&&nums2[i]>nums2[stack.peek()])
+                {
+                    int temp=nums2[stack.peek()];
+                    if(map.containsKey(temp))
+                    ans1[map.get(temp)]=nums2[i];
+                    stack.pop();
+                }
+            }
+            
+            stack.push(i);
+
+            
+            
+        }
+
+        return ans1;
+    }
+}
