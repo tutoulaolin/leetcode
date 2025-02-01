@@ -1,0 +1,27 @@
+class Solution {
+//邻接表
+        public List<Integer> path=new ArrayList<>();
+        public List<List<Integer>> result=new ArrayList<>();
+    public void dfs(int[][] graph,int cur,int des){
+        if(cur==des){
+            result.add(new ArrayList<>(path));
+            return;
+        }
+
+        for(int i:graph[cur]){
+            path.add(i);
+            dfs(graph,i,des);
+            path.remove(path.size()-1);
+        }
+
+    }
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        int des=graph.length-1;
+        path.add(0);
+        dfs(graph,0,des);
+
+        return result;
+        
+        
+    }
+}
