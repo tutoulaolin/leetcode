@@ -1,0 +1,45 @@
+import java.util.*;
+class Main{
+    
+    public static int[][] dir={{0,1},{1,0},{-1,0},{0,-1}};
+    static void dfs(int x,int y,int[][] grid,boolean[][] visited){
+        for(int i=0;i<4;i++){
+            int curx=x+dir[i][0];
+            int cury=y+dir[i][1];
+            if(curx<0||curx>=grid.length||cury<0||cury>=grid[0].length)
+            continue;
+            if(!visited[curx][cury]&&grid[curx][cury]==1){
+                visited[curx][cury]=true;
+                dfs(curx,cury,grid,visited);
+            }
+            
+        }
+    }
+    public static void main (String[] args) {
+        
+        Scanner scanner=new Scanner(System.in);
+        int n=scanner.nextInt();
+        int m=scanner.nextInt();
+        int ans=0;
+        
+        int[][] grid=new int[n][m];
+        boolean[][] visited=new boolean[n][m];
+        for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++)
+        grid[i][j]=scanner.nextInt();
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(!visited[i][j]&&grid[i][j]==1)
+                {
+                    ans++;
+                    visited[i][j]=true;
+                    dfs(i,j,grid,visited);
+                }
+                
+            }
+        }
+        System.out.println(ans);
+        
+    }
+}
