@@ -25,3 +25,57 @@ class Solution {
         
     }
 }
+
+//邻接矩阵
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Main{
+    
+    static List<Integer> path=new ArrayList<>();
+    static List<List<Integer>> result=new ArrayList<>();
+    public static void dfs(int cur,int des,int[][] graph){
+        if(cur==des)
+        {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        
+        for(int i=1;i<=des;i++){
+            if(graph[cur][i]==1){
+                path.add(i);
+                dfs(i,des,graph);
+                path.remove(path.size()-1);
+            }
+        }
+        
+    }
+    
+    public static void main (String[] args) {
+    Scanner scanner=new Scanner(System.in);
+    int n=scanner.nextInt();
+    int m=scanner.nextInt();
+    int[][] graph=new int[n+1][n+1];
+    for(int i=0;i<m;i++)
+    graph[scanner.nextInt()][scanner.nextInt()]=1;
+    path.add(1);
+    
+    dfs(1,n,graph);
+    
+    if(result.isEmpty())
+    System.out.println("-1");
+    else{
+        for(List<Integer> pa:result){
+            for(int i=0;i<pa.size()-1;i++)
+            System.out.print(pa.get(i)+" ");
+            
+            System.out.println(pa.get(pa.size()-1));
+        }
+    }
+    
+    
+}
+}
+
+
