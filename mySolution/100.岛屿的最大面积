@@ -1,0 +1,92 @@
+import java.util.*;
+class Main{
+    static int ans=0;
+    static int res=0;
+    static int ans2=0;
+    static int res2=0;
+    //方向
+    public static int[][] dir={{0,1},{1,0},{-1,0},{0,-1}};
+    //深度优先
+    static void dfs(int x,int y,int[][] grid,boolean[][] visited){
+        ans2++;
+        for(int i=0;i<4;i++){
+            int curx=x+dir[i][0];
+            int cury=y+dir[i][1];
+            if(curx<0||curx>=grid.length||cury<0||cury>=grid[0].length)
+            continue;
+            if(!visited[curx][cury]&&grid[curx][cury]==1){
+                visited[curx][cury]=true;
+                
+                dfs(curx,cury,grid,visited);
+            }
+            
+        }
+    }
+    //广度优先
+    static class pair {
+    int first, second;
+
+    pair(int first, int second) {
+        this.first = first;
+        this.second = second;
+    }
+}
+    
+    static void bfs(int x,int y,int[][] grid,boolean[][] visited){
+        //int temp=0;
+        Queue<pair> que=new LinkedList<pair>();
+        que.add(new pair(x,y));
+        visited[x][y]=true;
+        ans++;
+        while(!que.isEmpty()){
+            
+            x=que.peek().first;
+            y=que.poll().second;
+            
+            for(int i=0;i<4;i++){
+            int curx=x+dir[i][0];
+            int cury=y+dir[i][1];
+            if(curx<0||curx>=grid.length||cury<0||cury>=grid[0].length)
+            continue;
+            if(!visited[curx][cury]&&grid[curx][cury]==1){
+                visited[curx][cury]=true;
+                que.add(new pair(curx,cury));
+                ans++;
+            }
+            
+        }
+        }
+        
+        
+    }
+    public static void main (String[] args) {
+        
+        Scanner scanner=new Scanner(System.in);
+        int n=scanner.nextInt();
+        int m=scanner.nextInt();
+        
+        
+        int[][] grid=new int[n][m];
+        boolean[][] visited=new boolean[n][m];
+        for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++)
+        grid[i][j]=scanner.nextInt();
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(!visited[i][j]&&grid[i][j]==1)
+                {
+                    //ans=0;
+                    ans2=0;
+                    visited[i][j]=true;
+                    dfs(i,j,grid,visited);
+                    //res=Math.max(res,ans);
+                    res2=Math.max(res2,ans2);
+                }
+                
+            }
+        }
+        System.out.println(res2);
+        
+    }
+}
