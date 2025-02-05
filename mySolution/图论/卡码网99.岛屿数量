@@ -1,7 +1,8 @@
 import java.util.*;
 class Main{
-    
+    //方向
     public static int[][] dir={{0,1},{1,0},{-1,0},{0,-1}};
+    //深度优先
     static void dfs(int x,int y,int[][] grid,boolean[][] visited){
         for(int i=0;i<4;i++){
             int curx=x+dir[i][0];
@@ -14,6 +15,38 @@ class Main{
             }
             
         }
+    }
+    //广度优先
+    static class pair {
+    int first, second;
+
+    pair(int first, int second) {
+        this.first = first;
+        this.second = second;
+    }
+}
+    
+    static void bfs(int x,int y,int[][] grid,boolean[][] visited){
+        
+        Queue<pair> que=new LinkedList<pair>();
+        que.add(new pair(x,y));
+        visited[x][y]=true;
+        while(!que.isEmpty()){
+            x=que.peek().first;
+            y=que.poll().second;
+            for(int i=0;i<4;i++){
+            int curx=x+dir[i][0];
+            int cury=y+dir[i][1];
+            if(curx<0||curx>=grid.length||cury<0||cury>=grid[0].length)
+            continue;
+            if(!visited[curx][cury]&&grid[curx][cury]==1){
+                visited[curx][cury]=true;
+                que.add(new pair(curx,cury));
+            }
+            
+        }
+        }
+        
     }
     public static void main (String[] args) {
         
@@ -34,7 +67,7 @@ class Main{
                 {
                     ans++;
                     visited[i][j]=true;
-                    dfs(i,j,grid,visited);
+                    bfs(i,j,grid,visited);
                 }
                 
             }
