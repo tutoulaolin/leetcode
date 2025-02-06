@@ -1,0 +1,64 @@
+import java.util.*;
+class Main{
+    static int ans=0;
+    static int res=0;
+    static int ans2=0;
+    static int res2=0;
+    //方向
+    public static int[][] dir={{0,1},{1,0},{-1,0},{0,-1}};
+    //深度优先
+    static void dfs(int x,int y,int[][] grid){
+        grid[x][y]=0;
+        ans2++;
+        for(int i=0;i<4;i++){
+            int curx=x+dir[i][0];
+            int cury=y+dir[i][1];
+            if(curx<0||curx>=grid.length||cury<0||cury>=grid[0].length)
+            continue;
+            if(grid[curx][cury]==0)
+            continue;
+            dfs(curx,cury,grid);
+
+
+        }
+    }
+
+    public static void main (String[] args) {
+        
+        Scanner scanner=new Scanner(System.in);
+        int n=scanner.nextInt();
+        int m=scanner.nextInt();
+        
+        
+        int[][] grid=new int[n][m];
+        
+        for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++)
+        grid[i][j]=scanner.nextInt();
+        for(int i=0;i<n;i++){
+            if(grid[i][0]==1)
+            dfs(i,0,grid);
+            if(grid[i][m-1]==1)
+            dfs(i,m-1,grid);
+        }
+        for(int j=0;j<m;j++){
+            if(grid[0][j]==1)
+            dfs(0,j,grid);
+            if(grid[n-1][j]==1)
+            dfs(n-1,j,grid);
+        }
+        
+        ans2=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==1)
+                {
+                    dfs(i,j,grid);
+                }
+                
+            }
+        }
+        System.out.println(ans2);
+        
+    }
+}
