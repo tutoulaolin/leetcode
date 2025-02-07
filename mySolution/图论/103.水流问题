@@ -1,0 +1,53 @@
+import java.util.*;
+class Main{
+    public static int[][] dir={{0,1},{1,0},{-1,0},{0,-1}};
+    public static void dfs(int x,int y,int[][] grid,boolean[][] visited){
+        if(visited[x][y]) return;
+        
+        visited[x][y]=true;
+        for(int i=0;i<4;i++){
+            int curx=x+dir[i][0];
+            int cury=y+dir[i][1];
+            
+            if(curx<0||curx>=grid.length||cury<0||cury>=grid[0].length)
+            continue;
+            if(grid[curx][cury]<grid[x][y])
+            continue;
+            dfs(curx,cury,grid,visited);
+        }
+        
+    }
+    
+    public static void main (String[] args) {
+        
+        Scanner scanner=new Scanner(System.in);
+        int n=scanner.nextInt();
+        int m=scanner.nextInt();
+        int ans=0;
+        
+        int[][] grid=new int[n][m];
+        
+        for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++)
+        grid[i][j]=scanner.nextInt();
+        
+        boolean[][] first=new boolean[n][m];
+        boolean[][] second=new boolean[n][m];
+        
+        for(int i=0;i<n;i++){
+            dfs(i,0,grid,first);
+            dfs(i,m-1,grid,second);
+        }
+        for(int j=0;j<m;j++){
+            dfs(0,j,grid,first);
+            dfs(n-1,j,grid,second);
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(first[i][j]&&second[i][j])
+                System.out.println(i+" "+j);
+            }
+        }
+        
+    }
+}
