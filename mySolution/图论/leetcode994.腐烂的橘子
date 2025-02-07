@@ -1,0 +1,52 @@
+class pair{
+            int x;
+            int y;
+            pair(int x,int y){
+                this.x=x;
+                this.y=y;
+            }
+        }
+class Solution {
+    private int[][] dir={{0,1},{1,0},{-1,0},{0,-1}};    
+    public int orangesRotting(int[][] grid) {
+        int row=grid.length;
+        int col=grid[0].length;
+        int ans=0;
+        int fresh=0;
+        Queue<pair> que=new LinkedList<>();
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++)
+            if(grid[i][j]==1)
+            fresh++;
+            else if(grid[i][j]==2)
+            //最开始的腐烂橘子
+            que.add(new pair(i,j));
+        }
+        while(fresh>0&&!que.isEmpty()){
+            Queue<pair> temp=que;
+            que=new LinkedList<>();
+            ans++;
+            //每秒的子队列
+            while(!temp.isEmpty()){
+            int x=temp.peek().x;
+            int y=temp.poll().y;
+            for(int i=0;i<4;i++){
+                int curx=x+dir[i][0];
+                int cury=y+dir[i][1];
+                if(curx<0||cury<0||curx>=row||cury>=col)
+                continue;
+                if(grid[curx][cury]==1){
+                    que.add(new pair(curx,cury));
+                    grid[curx][cury]=2;
+                    fresh--;
+                }
+            }
+            }
+            
+        }
+
+        return fresh>0?-1:ans;
+
+        
+    }
+}
