@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int ans;
+    public int maxDepth(TreeNode root) {
+       
+       if(root==null)
+        return 0;
+        int leftDepth=maxDepth(root.left);//左子树的最大节点数
+        int rightDepth=maxDepth(root.right);//右子树的最大节点数
+        ans=Math.max(ans,leftDepth+rightDepth+1);//该节点为根节点时最大节点数
+        return Math.max(leftDepth,rightDepth)+1;//左右子树的最大节点数
+        
+    }
+
+    public int diameterOfBinaryTree(TreeNode root) {
+        ans=1;
+        maxDepth(root);
+
+        return ans-1;
+    }
+}
