@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int sum;
+    public void backtracking(TreeNode root,long targetSum){
+        if(root==null)
+        return;
+        targetSum-=root.val;
+        if(targetSum==0)
+        {
+            sum++;
+        }
+            //if(root.left!=null)
+            backtracking(root.left,targetSum);
+            //if(root.right!=null)
+            backtracking(root.right,targetSum);
+
+    }
+    public int pathSum(TreeNode root, int targetSum) {
+        
+        if(root==null)
+        return 0;
+
+        backtracking(root,targetSum);
+        //遍历树的每个节点，分别以该节点为根节点
+        pathSum(root.left,targetSum);
+        pathSum(root.right,targetSum);
+
+        return sum;
+
+        
+        
+    }
+}
