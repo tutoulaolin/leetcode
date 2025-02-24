@@ -1,0 +1,50 @@
+class Solution {
+    public int majorityElement(int[] nums) {
+        /*
+        哈希
+        int n=nums.length/2;
+        HashMap<Integer,Integer> map=new HashMap<>();
+        int maxnum=0;
+        for(int i=0;i<nums.length;i++){
+            if(map.containsKey(nums[i])){
+                map.put(nums[i],map.get(nums[i])+1);
+            }else
+            map.put(nums[i],1);  
+
+            maxnum=Math.max(maxnum,map.get(nums[i])); 
+        }
+
+        for(Map.Entry<Integer,Integer> entry:map.entrySet()){
+            if(entry.getValue()==maxnum)
+            return entry.getKey();
+        }
+
+        return 0;
+        */
+        /*
+        排序后取得中间值
+        Arrays.sort(nums);
+        int length=nums.length/2;
+        return nums[length];
+        */
+        //摩尔投票法
+        int target=nums[0];
+        int cnt=1;
+        for(int i=1;i<nums.length;i++){
+            if(nums[i]==target)
+            cnt++;
+            else
+            cnt--;
+            if(cnt<=0)
+            {//更新target cnt
+                target=nums[i];
+                cnt=1;
+                }
+        }
+
+        return target;
+
+
+        
+    }
+}
