@@ -1,0 +1,60 @@
+class Solution {
+    public void setc0(int[][] matrix,int col,int n){
+        for(int i=0;i<n;i++){
+            if(matrix[i][col]!=0)
+            matrix[i][col]=0;
+            
+        }
+        
+    }
+    public void setr0(int[][] matrix,int row,int n){
+        for(int i=0;i<n;i++){
+            if(matrix[row][i]!=0)
+            matrix[row][i]=0;
+            
+        }
+        
+    }
+    public void setZeroes(int[][] matrix) {
+        //空间复杂度 O(M+N)
+        int m=matrix.length;
+        int n=matrix[0].length;
+        boolean[] rowflag=new boolean[m];
+        boolean[] colflag=new boolean[n];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++)
+            if(matrix[i][j]==0)
+            {
+                rowflag[i]=true;
+                colflag[j]=true;
+                   
+            }
+        }
+        for(int i=0;i<m;i++){
+            if(rowflag[i])
+            setr0(matrix,i,n);
+        }
+        for(int i=0;i<n;i++)
+        if(colflag[i])
+        setc0(matrix,i,m);
+
+        /*  空间复杂度O(M*N)
+        boolean[][] flag=new boolean[m][n];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++)
+            if(matrix[i][j]==0)
+            {
+                flag[i][j]=true;
+            }
+        }
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++)
+            if(flag[i][j])
+            {
+                setc0(matrix,j,m);
+                setr0(matrix,i,n);
+            }
+        }*/
+        
+    }
+}
