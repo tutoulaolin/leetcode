@@ -1,0 +1,57 @@
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> nums=new LinkedList<>();
+        int row=matrix.length;
+        int col=matrix[0].length;
+        int offset=1;
+        int startx=0;
+        int starty=0;
+        int x;
+        int y;
+
+        int loop=Math.min(row,col)/2;
+        while(loop>0){
+            x=startx;
+            y=starty;
+            //上
+            for(y=starty;y<col-offset;y++)
+            {   
+                nums.add(matrix[x][y]);    
+            }
+            //右
+            for(x=startx;x<row-offset;x++){
+                nums.add(matrix[x][y]);
+            }
+            //下
+            for(;y>starty;y--){
+                nums.add(matrix[x][y]);
+            }
+            //左
+            for(;x>startx;x--){
+                nums.add(matrix[x][y]);
+            }
+
+            offset++;
+            loop--;
+            startx++;
+            starty++;
+           
+        }
+        if(Math.min(row,col)%2==1)
+        {
+            if(row<=col){
+                for(y=starty;y<=col-offset;y++)
+            {   
+                nums.add(matrix[startx][y]);    
+            }
+            }else
+            for(x=startx;x<=row-offset;x++){
+                nums.add(matrix[x][starty]);
+            }
+        }
+
+        return nums;
+
+        
+    }
+}
