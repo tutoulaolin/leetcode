@@ -1,0 +1,32 @@
+class Solution {
+    public int maxArea(int[] height) {
+        if(height.length<=1)
+        return 0;
+        /* 超时
+        int start=0;
+        //int end=height.length-1;
+        int sum=0;
+        
+        for(;start<height.length;start++){
+            for(int end=start+1;end<height.length;end++){
+                sum=Math.max(sum,Math.min(height[start],height[end])*(end-start));
+            }
+        }
+
+        return sum;
+        */
+        /* 双指针 */
+        int start=0;
+        int end=height.length-1;
+        int ans=0;
+        while(start<end){
+            ans=Math.max(ans,Math.min(height[start],height[end])*(end-start));
+            if(height[start]<height[end])
+            start++;
+            else
+            end--;
+        }
+
+        return ans;
+    }
+}
