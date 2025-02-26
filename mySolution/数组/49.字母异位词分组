@@ -1,0 +1,27 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String,List<String>> map=new HashMap<String,List<String>>();
+        for(String str:strs){
+        //对于字符数组，toString() 方法不会返回其内容，而是返回一个类似于 [C@<hashcode> 的字符串，其中 <hashcode> 是该数组对象的哈希码。
+            char[] key=str.toCharArray();
+            Arrays.sort(key);
+            String Key=new String(key);
+            if(map.containsKey(Key)){
+                map.get(Key).add(str);
+            }else{
+                List<String> l=new LinkedList<>();
+                l.add(str);
+                map.put(Key,l);
+            }
+            
+        }
+
+        List<List<String>> list=new LinkedList<>();
+        for(List<String> value:map.values()){
+            list.add(value);
+        }
+
+        return list;
+        
+    }
+}
