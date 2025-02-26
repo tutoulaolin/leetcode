@@ -1,0 +1,89 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode sortList(ListNode head,ListNode end){
+        //分开
+        if(head==null)
+        return head;
+        if(head.next==end)
+        {
+            head.next=null;
+            return head;
+        }
+        /*
+        寻找链表的中点可以使用快慢指针的做法，快指针每次移动 2 步，慢指针每次移动 1 步，当快指针到达链表末尾时，慢指针指向的链表节点即为链表的中点。
+        */ 
+        ListNode fast=head;
+        ListNode slow=head;
+        while(fast!=end){
+            slow=slow.next;
+            fast=fast.next;
+            if(fast!=end)
+            fast=fast.next;
+        }
+        ListNode mid=slow;
+        //分开
+        ListNode left=sortList(head,mid);
+        ListNode right=sortList(mid,end);
+        ;
+        //合并
+        return merge(left,right);
+    }
+    public ListNode merge(ListNode l1,ListNode l2){
+        //合并
+        /* 内存超出限制
+        ListNode temp=new ListNode();
+        ListNode p=temp;
+
+        while(l1!=null&&l2!=null){
+            if(l1.val<=l2.val){
+                //新增了节点
+                temp.next=new ListNode(l1.val);
+                l1=l1.next;
+            }
+            else{
+                temp.next=new ListNode(l2.val);
+                l1=l2.next;
+            }
+            temp=temp.next;
+        }
+        if(l1!=null)
+        temp.next=l1;
+        if(l2!=null)
+        temp.next=l2;
+        return p.next;
+        */
+        ListNode dummyNode=new ListNode();
+        ListNode temp=dummyNode;
+        ListNode r=l1;
+        ListNode l=l2;
+        while(r!=null&&l!=null){
+            if(r.val>l.val){
+                temp.next=l;
+                l=l.next;
+            }else{
+                temp.next=r;
+                r=r.next;
+            }
+            temp=temp.next;
+        }
+        if(r!=null)
+        temp.next=r;
+        if(l!=null)
+        temp.next=l;
+
+        return dummyNode.next;
+
+    }
+    public ListNode sortList(ListNode head) {
+        return sortList(head,null);
+    }
+}
