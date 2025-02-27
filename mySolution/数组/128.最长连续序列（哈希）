@@ -7,6 +7,24 @@ class Solution {
             set.add(n);
         }
         int ans=0;
+        for(int num:set){
+            //只往后进行比较
+            if(!set.contains(num-1)){
+                int n=1;
+                int curnum=num;
+                while(set.contains(curnum+1)){
+                n++;
+                curnum++;
+            }
+                ans=Math.max(ans,n);
+            }
+            
+            
+        }
+        return ans;
+
+        /*
+        int ans=0;
         int[] arr=new int[set.size()];
         int n=0;
         for(int m:set){
@@ -24,6 +42,7 @@ class Solution {
         }
         ans=Math.max(ans,cnt);
 
-        return ans;
+        return ans;*/
+
     }
 }
