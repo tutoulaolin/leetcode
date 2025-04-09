@@ -1,0 +1,41 @@
+//使用pair，维护该元素入栈前的最小元素
+class MinStack {
+
+    public Stack<Pair<Integer,Integer>> stack;
+    public int minval=Integer.MAX_VALUE;
+    
+    public MinStack() {
+       stack=new Stack<>();
+    }
+    
+    public void push(int val) {
+        stack.push(new Pair<Integer,Integer>(val,minval));
+        if(val<minval)
+        minval=val;
+    }
+    
+    public void pop() {
+        Pair<Integer,Integer> pair=stack.peek();
+        if(pair.getKey()==minval){
+            minval=pair.getValue();
+        }
+        stack.pop();
+    }
+    
+    public int top() {
+        return stack.peek().getKey();
+    }
+    
+    public int getMin() {
+        return minval;
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(val);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
