@@ -1,0 +1,35 @@
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        //拓扑排序
+        List<List<Integer>> list=new ArrayList<>();
+        Queue<Integer> que=new LinkedList<>();
+        int[] in=new int[numCourses];
+        int ans=0;
+        for(int i=0;i<numCourses;i++){
+            list.add(new ArrayList<>());
+        }
+        for(int i=0;i<prerequisites.length;i++){
+            list.get(prerequisites[i][0]).add(prerequisites[i][1]);
+            in[prerequisites[i][1]]++;
+        }
+        for(int i=0;i<numCourses;i++){
+            if(in[i]==0){
+                que.add(i);
+                ans++;
+            }
+        }
+        while (!que.isEmpty()) {
+            int i=que.poll();
+            for(int num:list.get(i)){
+                    in[num]--;
+                    if(in[num]==0){
+                        que.add(num);
+                        ans++;
+                    }
+                    
+                }
+        }
+
+        return ans==numCourses;
+    }
+}
