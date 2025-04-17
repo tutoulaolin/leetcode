@@ -1,0 +1,43 @@
+class Solution {
+    public int findBig(int[] nums,int index){
+        
+        int temp=Integer.MAX_VALUE;
+        int ans=index+1;
+        for(int i=nums.length-1;i>index;i--){
+            if(nums[i]>nums[index])
+            {
+                if(nums[i]<temp){
+                    temp=nums[i];
+                    ans=i;
+                }
+            }
+        }
+        return ans;
+    }
+    public void nextPermutation(int[] nums) {
+        int len=nums.length;
+        int left=0;
+        int right=len-1;
+        for(int i=len-2;i>=0;i--){
+            //找到第一个非下降数
+            if(nums[i]<nums[i+1]){
+                //找到对应的该数右边最小的比它大的数
+                int index=findBig(nums,i);
+                //交换
+                int temp=nums[index];
+                nums[index]=nums[i];
+                nums[i]=temp;
+                left=i+1;
+                break;
+            }
+        }
+        //第一个非下降位置左边reverse（从右到左的升序变成降序）
+        while(left<right){
+            int temp=nums[left];
+            nums[left]=nums[right];
+            nums[right]=temp;
+            left++;
+            right--;
+        }
+    }
+}
