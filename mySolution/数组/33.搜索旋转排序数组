@@ -1,0 +1,36 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        
+        int len=nums.length;
+        int left=0;
+        int right=len-1;
+        int mid=left+(right-left)/2;//防止溢出
+        while (left<=right) {
+            if(nums[mid]==target)
+            return mid;
+            else if(nums[mid]<nums[left]){
+                //旋转点在左半边，右半边有序
+                if(target>nums[mid]&&target<=nums[right]){
+                    //target在有序区间
+                    left=mid+1;
+                    
+                }else{
+                    right=mid-1;
+                    
+                }
+                mid=left+(right-left)/2;
+            }else{
+                if(target<nums[mid]&&target>=nums[left]){
+                    right=mid-1;
+                   
+                }else{
+                    left=mid+1;
+                    
+                }
+                mid=left+(right-left)/2;
+            }
+        }
+
+        return -1;
+    }
+}
