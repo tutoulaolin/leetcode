@@ -1,0 +1,22 @@
+class Solution {
+    public int findMin(int[] nums) {
+        int left=0;
+        int len=nums.length;
+        int right=len-1;
+        int mid=left+(right-left)/2;
+        while(left<right){
+            
+            if(nums[mid]<=nums[right]){
+                //要用right判断
+                //旋转点在左边，mid可能是最小
+                right=mid;
+            }
+            else
+            left=mid+1;//旋转点在右边
+
+            mid=left+(right-left)/2;
+        }
+
+        return nums[left];
+    }
+}
