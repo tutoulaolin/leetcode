@@ -1,0 +1,37 @@
+class Solution {
+    public String decodeString(String s) {
+        Stack<String> stringStack=new Stack<>();//括号外的/以及处理过的string
+        Stack<Integer> countStack=new Stack<>();
+        StringBuilder sb=new StringBuilder();//curstring 括号里的
+        int curnum=0;
+        int len=s.length();
+        
+        for(char c:s.toCharArray()){
+            if(Character.isDigit(c))
+            curnum=curnum*10+(c-'0');
+            else if(c=='[')
+            {
+                countStack.push(curnum);
+                stringStack.push(sb.toString());
+                curnum=0;
+                sb=new StringBuilder();
+            }
+            else if(c==']'){
+                
+                int sum=countStack.pop();
+                
+                StringBuilder str=new StringBuilder(stringStack.pop());
+                for(int j=0;j<sum;j++)
+                str.append(sb);
+
+                sb=str;
+
+            }else{
+                sb.append(c);
+            }
+        }
+        
+
+        return sb.toString();
+    }
+}
