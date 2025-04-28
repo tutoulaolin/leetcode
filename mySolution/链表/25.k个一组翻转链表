@@ -1,0 +1,46 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode dummyNode=new ListNode(0);
+        dummyNode.next=head;
+        ListNode pre=dummyNode;
+        ListNode cur=pre.next;
+        int len=0;
+        //计算节点数
+        while(head!=null){
+            head=head.next;
+            len++;
+        }
+        //计算反转次数len/k
+        for(int i=0;i<len/k;i++){
+            //记录开始前的位置
+            ListNode first=cur;
+            ListNode preNode=pre;
+            for(int j=0;j<k;j++){
+                //反转k个
+                ListNode nextNode=cur.next;
+                cur.next=pre;
+                pre=cur;
+                cur=nextNode;
+            }
+            //将反转后的一段接到原来的尾和头
+            first.next=cur;//头接尾段
+            preNode.next=pre;//前段接尾
+            //新的pre就是原来的cur，此时cur已经到反转后的那段末尾
+            pre=first;
+
+        }
+
+        return dummyNode.next;
+        
+    }
+}
