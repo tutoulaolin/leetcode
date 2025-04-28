@@ -1,0 +1,44 @@
+class Solution {
+    public String minWindow(String s, String t) {
+        int[] hash1=new int[128];//t里的字母
+        int[] hash2=new int[128];//窗口里的字母
+        int kind=0;//t里的字母总类数
+        int count=0;//窗口里的字母种类数
+        int left=0,right=0;
+        int begin=-1;//窗口开始位置
+        int len=Integer.MAX_VALUE;//最小窗口大小
+        for(char c:t.toCharArray()){
+            if(hash1[c]==0)
+            kind++;
+            hash1[c]++;
+        }
+        while (right<s.length()) {
+
+            hash2[s.charAt(right)]++;//先进窗口
+            
+            //再计算窗口内的种类数
+            if(hash2[s.charAt(right)]==hash1[s.charAt(right)])
+            count++;
+            //若满足
+            while(count==kind){
+                //则先更新最小长度
+                if(right-left+1<len){
+                    len=right-left+1;
+                    begin=left;
+                }
+                //计算出窗口后的种类数
+                if(hash2[s.charAt(left)]==hash1[s.charAt(left)]){
+                    count--;
+                }
+                //再出窗口
+                hash2[s.charAt(left)]--;
+                left++;
+            }
+            right++;   
+        }
+        if(begin==-1)
+        return "";
+        else
+        return s.substring(begin,begin+len);
+    }
+}
