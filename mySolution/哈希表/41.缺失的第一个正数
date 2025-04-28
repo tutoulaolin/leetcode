@@ -1,0 +1,37 @@
+
+
+import static java.lang.Math.incrementExact;
+
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        /* HashSet
+        int ans=1;
+        HashSet<Integer> set=new HashSet<>();
+        for(int n:nums){
+            if(n>0&&n>=ans)
+            set.add(n);
+            while(set.contains(ans)){
+                ans++;
+            }
+            
+        }
+        return ans;
+        */
+        //哈希+置换法
+        int len=nums.length;
+        for(int i=0;i<len;i++){
+            while(nums[i]>0&&nums[i]<=len&&nums[nums[i]-1]!=nums[i]){
+                int temp=nums[i];
+                nums[i]=nums[nums[i]-1];
+                nums[temp-1]=temp;
+            }
+        }
+        for(int i=0;i<len;i++){
+            if(nums[i]!=i+1)
+            return i+1;
+        }
+
+        return len+1;
+        
+    }
+}
