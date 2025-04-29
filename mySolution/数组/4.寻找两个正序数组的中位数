@@ -1,0 +1,29 @@
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int m=nums1.length;
+        int n=nums2.length;
+        boolean isEven=false;
+        if((m+n)%2==0)
+        isEven=true;
+
+        int mid=(m+n)/2;
+        int ans=0;
+        int pre=0;//保留前一个数，处理偶数情况
+        int pos1=0;
+        int pos2=0;
+        //就不想二分，你能拿我怎样 O(log(Min(m,n)))
+        for(int i=0;i<=mid;i++){
+            pre=ans;
+            if(pos1<m&&(pos2>=n||nums1[pos1]<nums2[pos2])){
+                //1>2 or 2超范围了
+                ans=nums1[pos1++];
+            }else
+                ans=nums2[pos2++];
+        }
+        if (isEven) {
+            return (float)(pre+ans)/2;
+        }
+        else;
+        return (float)ans;
+    }
+}
