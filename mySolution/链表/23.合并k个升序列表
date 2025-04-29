@@ -1,0 +1,63 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    //归并函数
+    public ListNode mergeList(ListNode l1,ListNode l2){
+        if(l1==null||l2==null)
+        return l1!=null?l1:l2;
+
+        ListNode merge=new ListNode();
+        ListNode head=merge;
+        while(l1!=null&&l2!=null){
+            //不创建新节点，节省时间
+            if(l1.val>l2.val){
+                merge.next=l2;
+                l2=l2.next;
+            }else{
+                merge.next=l1;
+                l1=l1.next;
+            }
+            merge=merge.next;
+        }
+        if(l1!=null)
+        merge.next=l1;
+        if(l2!=null)
+        merge.next=l2;
+
+        return head.next;
+    }
+    //分治
+    public ListNode merge(ListNode[] lists,int left,int right){
+        if(left==right)
+        return lists[left];
+        if(left>right)
+        return null;
+        //防止溢出
+        int mid=left+(right-left)/2;
+
+        return mergeList(merge(lists,left,mid), merge(lists,mid+1,right));
+    }
+    public ListNode mergeKLists(ListNode[] lists) {
+        return merge(lists,0,lists.length-1);
+        /*
+        维护ans链表
+        if (lists.length==0) {
+            return null;
+        }
+        ListNode ans=lists[0];
+        for(int i=1;i<lists.length;i++){
+            ans=mergeList(ans, lists[i]);
+        }
+
+        return ans;
+        */
+    }
+}
