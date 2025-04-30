@@ -1,0 +1,40 @@
+class MedianFinder {
+    PriorityQueue<Integer> queMin;
+    PriorityQueue<Integer> queMax;
+
+    public MedianFinder() {
+        queMin=new PriorityQueue<Integer>((a,b)->(b-a));//与max一样多或多1
+        queMax=new PriorityQueue<Integer>((a,b)->(a-b));//与min一样多或少一
+    }
+    
+    public void addNum(int num) {
+        if(queMin.isEmpty()||num<=queMin.peek()){
+            queMin.add(num);
+            if(queMin.size()>queMax.size()+1){
+                int temp=queMin.poll();
+                queMax.add(temp);
+            }
+        }else{
+            queMax.add(num);
+            if(queMin.size()<queMax.size()){
+                int temp=queMax.poll();
+                queMin.add(temp);
+            }
+        }
+    }
+    
+    public double findMedian() {
+        if(queMin.size()>queMax.size())
+        return queMin.peek();
+        else{
+            return (queMin.peek()+queMax.peek())/2.0;
+        }
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
