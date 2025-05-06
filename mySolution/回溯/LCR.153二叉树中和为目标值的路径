@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> res=new ArrayList<>();
+    public List<Integer> path=new LinkedList<>();
+    public void backtracking(TreeNode root,int target){
+        //sum可以为负数，无法进行剪枝
+        if(target==0&&root.left==null&&root.right==null){
+            res.add(new LinkedList<>(path));
+            return;
+        }
+        
+
+        if(root.left!=null){
+            path.add(root.left.val);
+            backtracking(root.left, target-root.left.val);
+            path.remove(path.size()-1);
+        }
+
+        if(root.right!=null){
+            path.add(root.right.val);
+            backtracking(root.right, target-root.right.val);
+            path.remove(path.size()-1);
+        }
+
+
+    }
+    public List<List<Integer>> pathTarget(TreeNode root, int target) {
+        if(root==null)
+        return res;
+        path.add(root.val);
+        backtracking(root, target-root.val);
+        return res;
+    }
+}
